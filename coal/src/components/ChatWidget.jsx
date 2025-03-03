@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Chat } from './ChatWindow'
-
+import  {FontAwesomeIcon}  from '@fortawesome/react-fontawesome'
+import { faMessage, faPenNib } from '@fortawesome/free-solid-svg-icons'
 export const ChatWidget= ()=> {
     const [active,setActive]=useState(false)
     function handleClick (){
@@ -8,7 +9,7 @@ export const ChatWidget= ()=> {
     }
     return(
         <div className='body'>
-            {active ? <Chat/> :<buttton onClick={()=>handleClick()}> <FontAwesomeIcon icon="fa-regular fa-comment" /> </buttton>}
+            {active ? <Chat/> :<button onClick={()=>handleClick()}> <FontAwesomeIcon icon={faMessage} /> </button>}
         </div>
 
     )
