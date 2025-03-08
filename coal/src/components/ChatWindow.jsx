@@ -5,27 +5,20 @@ import './Window.css'
 const API = 'http://127.0.0.1:8080/chat'
 export const Chat= ({apiUrl, initialPrompt,windowProp , messageProp})=>{
     const [input, setInput] = useState("");
-    initialPrompt="You are a helpfull bot"
-    const [messages, setMessages] = useState([]);
-    useEffect( () =>{
-        async () =>{
-           if(initialPrompt){
-            await axios.post(API,{message: messages})
-            } 
-        } 
-    },[initialPrompt])
+    initialPrompt="You are a helpfull bot. Talk like batman."
+    const [messages, setMessages] = useState([{text: initialPrompt, role : 'user'}]);
+    
     const handleSend= async ()=>{
         if(!input.trim()){
             return;
         }
-        const newMessage = [...messages,{ text: input, sender: "user" }];
+        const newMessage = [...messages,{ text: input, role: "user" }];
         setMessages(newMessage)
         setInput('')
 
         const response= await axios.post(API,newMessage)
-        console.log(response.data.item.message)
-        const ind=response.data.item.message.length
-        setMessages([...newMessage,{text:response.data.item.message[ind-1]['text'], sender:'bot'}])
+        console.log(response.data.reply)
+        setMessages([...newMessage,{text:response.data.reply, role:'model'}])
     }
     return(
         <div className={'flex flex-col w-full overflow-hidden pb-[3px] bg-cyan-500 size-64 windowProp'}>

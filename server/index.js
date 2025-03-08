@@ -13,9 +13,18 @@ app.post('/chat', async (req,res)=>{
     try {
         const message = req.body;
         console.log(message)
-        const resp = await model.generateContent(message,);
+        console.log({contents:message.map((msg)=>({
+            role:msg.role,parts :[{
+                text:msg.text
+            }]
+        }))})
+        const resp = await model.generateContent({contents:message.map((msg)=>({
+            role:msg.role,parts :[{
+                text:msg.text
+            }]
+        }))});
         console.log(resp.response.text())
-        res.json({ reply: resp.response.text() });
+        res.json({ reply: resp.response.text() || " " });
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: error.message });
