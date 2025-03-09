@@ -11,18 +11,18 @@ app.use(express.json());
 
 app.post('/chat', async (req,res)=>{
     try {
-        const message = req.body;
+        const {system,message} = req.body;
         console.log(message)
-        console.log({contents:message.map((msg)=>({
+        console.log({contents:[{role:'user',text:system},...message.map((msg)=>({
             role:msg.role,parts :[{
                 text:msg.text
             }]
-        }))})
-        const resp = await model.generateContent({contents:message.map((msg)=>({
+        }))]})
+        const resp = await model.generateContent({contents:[{role:'user',parts:[{text:system}]},...message.map((msg)=>({
             role:msg.role,parts :[{
                 text:msg.text
             }]
-        }))});
+        }))]});
         console.log(resp.response.text())
         res.json({ reply: resp.response.text() || " " });
     } catch (error) {
