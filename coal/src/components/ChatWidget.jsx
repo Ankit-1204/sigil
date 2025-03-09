@@ -9,7 +9,7 @@ export const ChatWidget= ({apiUrl, initialPrompt, widgetProp ,windowProp , messa
     }
     return(
         <div className={'widgetProp'}>
-            {active ? <Chat initialPrompt='Talk like superman'/> :<button onClick={()=>handleClick()}> <FontAwesomeIcon icon={faMessage} /> </button>}
+            {active ? <Chat initialPrompt='Talk like superman' handleClick={handleClick}/> :<button onClick={()=>handleClick()}> <FontAwesomeIcon icon={faMessage} /> </button>}
         </div>
 
     )
