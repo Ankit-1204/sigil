@@ -15,7 +15,7 @@ export const ChatWidget= ({apiUrl, initialPrompt, widgetProp ,windowProp , messa
         minHeight={100}
         bounds="window"
         dragHandleClassName="chat-drag-handle"
-    ><Chat initialPrompt='Talk like superman' handleClick={handleClick}/> </Rnd>:<button onClick={()=>handleClick()}> <FontAwesomeIcon icon={faMessage} /> </button>}
+    ><div className='w-200 h-100'><Chat initialPrompt='Talk like superman' handleClick={handleClick}/> </div> </Rnd>:<button onClick={()=>handleClick()}> <FontAwesomeIcon icon={faMessage} /> </button>}
         </div>
 
     )

@@ -11,7 +11,7 @@ export const Chat= ({ initialPrompt,windowProp , messageProp, handleClick,apiKey
     const [messages, setMessages] = useState([]);
     
     return(
-        <div className={`flex flex-col w-full max-w-md h-80 overflow-hidden pb-[3px] bg-slate-800 rounded-xl shadow-xl ${windowProp || ""} `}>
+        <div className={`flex flex-col w-full h-full overflow-hidden pb-[3px] bg-slate-800 rounded-xl shadow-xl ${windowProp || ""} `}>
            <ChatBar handleClick={handleClick} messageProp={messageProp}/>
            <MessageArea messages={messages} />
            <InputArea messages={messages} setMessages={setMessages} apiKey={apiKey}/>
