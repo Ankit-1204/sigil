@@ -1,8 +1,9 @@
-const InMemory= require("./memory/inmemory")
+const InMemory= require("./memory/inmemory.cjs")
 
 class ChatEngine {
     constructor(config) {
-        const Adapter = config.Adapter || require('./adaptors/gemini')
+        console.log("Initialized")
+        const Adapter = config.adapter || require('./adaptors/gemini.cjs')
         this.model = new Adapter(config.modelConfig)
         this.systemPrompt = config.systemPrompt || "You are a helpful AI assistant."
         this.memory= new InMemory(config.maxHistory || 15)
@@ -22,9 +23,11 @@ class ChatEngine {
     }
 
     async ask(message){
-        completeMessage=this._formatMessage(message)
+        const completeMessage=this._formatMessage(message)
+        console.log(completeMessage)
         const response = await this.model.generate(completeMessage)
         this.memory.addMessage('assistant',response)
+        return response
     }
 
     reset(){

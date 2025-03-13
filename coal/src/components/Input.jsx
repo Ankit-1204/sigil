@@ -2,17 +2,17 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
-export const InputArea=({messages,setMessages})=>{
+export const InputArea=({messages,setMessages,apiUrl})=>{
     const [input, setInput] = useState("");
     const handleSend= async ()=>{
         if(!input.trim()){
             return;
         }
+        const msg=input
         const newMessage = [...messages,{ text: input, role: "user" }];
         setMessages(newMessage)
         setInput('')
-
-        const response= await axios.post(API,{system: Prompt,message:newMessage})
+        const response= await axios.post(apiUrl,{message:msg})
         setMessages([...newMessage,{text:response.data.reply, role:'model'}])
     }
     return(

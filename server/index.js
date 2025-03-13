@@ -1,34 +1,23 @@
 const express= require('express')
 const cors = require('cors')
+const ChatEngine = require('../coal/src/core/index.cjs')
+const Adapter = require('../coal/src/core/adaptors/gemini.cjs')
 require("dotenv").config();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app=express()
 const PORT = process.env.PORT || 5000;
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API)
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
+const chat= new ChatEngine({modelConfig: {apiKey:process.env.GEMINI_API}, adapter:Adapter,systemPrompt:"Talk like superman."})
 app.post('/chat', async (req,res)=>{
     try {
-        const {system,message} = req.body;
-        console.log(message)
-        console.log({contents:[{role:'user',text:system},...message.map((msg)=>({
-            role:msg.role,parts :[{
-                text:msg.text
-            }]
-        }))]})
-        const resp = await model.generateContent({contents:[{role:'user',parts:[{text:system}]},...message.map((msg)=>({
-            role:msg.role,parts :[{
-                text:msg.text
-            }]
-        }))]});
-        console.log(resp.response.text())
-        res.json({ reply: resp.response.text() || " " });
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ error: error.message });
-    }
+        const message=req.body
+        console.log(message.message)
+        const resp=await chat.ask(message.message)
+        res.json({resp})
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
 })
 app.listen(PORT,()=>{
     console.log(`Server running on ${PORT}`)
