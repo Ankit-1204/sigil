@@ -4,8 +4,9 @@ class InMemory{
         this.max_length=max_length
     } 
 
-    addMessage(role,text){
-        this.history.push({role,text})
+    addMessage(role,content){
+        console.log(`${role} and ${content}`)
+        this.history.push({role,content})
         if (this.history.length > this.max_length) {
             this.history.shift();
         }

@@ -15,6 +15,7 @@ class GeminiAdapter {
 
     async generate(history,options={}){
         const formatHistory=this._formatMessage(history);
+        
         try {
             const res= await axios.post(`${this.apiUrl}?key=${this.apiKey}`,
             {
@@ -30,8 +31,8 @@ class GeminiAdapter {
                     } 
             }
         )
-        console.log(res)
-        return res.candidates[0]?.content?.parts[0]?.text.trim() || 'No Response'
+        // [0]?.content?.parts[0]?.text.trim() 
+        return res.data.candidates[0]?.content.parts[0]?.text.trim()|| 'No Response'
         } catch (error) {
             console.error('Gemini API Error:', error.response?.data || error.message);
             throw new Error('Failed to fetch response from Gemini');

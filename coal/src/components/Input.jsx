@@ -13,7 +13,7 @@ export const InputArea=({messages,setMessages,apiUrl})=>{
         setMessages(newMessage)
         setInput('')
         const response= await axios.post(apiUrl,{message:msg})
-        setMessages([...newMessage,{text:response.data.reply, role:'model'}])
+        setMessages([...newMessage,{text:response.data.data, role:'model'}])
     }
     return(
     <div className="flex items-center gap-2 border-t bg-slate-700 p-2">

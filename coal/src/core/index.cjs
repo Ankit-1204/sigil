@@ -26,6 +26,7 @@ class ChatEngine {
         const completeMessage=this._formatMessage(message)
         console.log(completeMessage)
         const response = await this.model.generate(completeMessage)
+        console.log(response)
         this.memory.addMessage('assistant',response)
         return response
     }
