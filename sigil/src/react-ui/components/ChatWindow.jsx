@@ -1,7 +1,4 @@
 import React from 'react';
-import { useState , useEffect, useRef } from 'react';
-import axios from "axios"
-import './Window.css'
 import { useChat } from '../hooks/useChat';
 import { ChatBar } from './ChatBar';
 import { MessageArea } from './Message';

@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from "axios";
 
  class OpenAiAdapter{
     constructor(config){
@@ -32,4 +32,4 @@ const axios = require('axios')
     }
  }
 
-module.exports= OpenAiAdapter;
+export {OpenAiAdapter};

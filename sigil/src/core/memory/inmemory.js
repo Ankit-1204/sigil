@@ -19,4 +19,4 @@ class InMemory{
     }
 }
 
-module.exports= InMemory;
+export {InMemory}

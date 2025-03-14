@@ -1,9 +1,11 @@
-const InMemory= require("./memory/inmemory.cjs")
+import { InMemory } from './memory/inmemory.js'
+import { GeminiAdapter } from './adaptors/gemini.js'
+import { OpenAiAdapter } from './adaptors/openAI.js'
 
 class ChatEngine {
     constructor(config) {
         console.log("Initialized")
-        const Adapter = config.adapter || require('./adaptors/gemini.cjs')
+        const Adapter = config.adapter || require('./adaptors/gemini.js')
         this.model = new Adapter(config.modelConfig)
         this.systemPrompt = config.systemPrompt || "You are a helpful AI assistant."
         this.memory= new InMemory(config.maxHistory || 15)
@@ -36,4 +38,8 @@ class ChatEngine {
     }
 }
 
-module.exports=ChatEngine
+export {ChatEngine,
+    InMemory,
+    OpenAiAdapter,
+    GeminiAdapter
+}

@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from "axios";
 
 class GeminiAdapter {
     constructor(config){
@@ -40,4 +40,4 @@ class GeminiAdapter {
     }
 }
 
-module.exports = GeminiAdapter;
+export {GeminiAdapter}
