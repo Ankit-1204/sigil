@@ -13,8 +13,8 @@ app.post('/chat', async (req,res)=>{
     try {
         const message=req.body
         console.log(message.message)
-        const resp=await chat.ask(message.message)
-        res.json({resp})
+        const data=await chat.ask(message.message)
+        res.json({data})
     } catch (err) {
         res.status(500).json({ error: err.message });
       }
