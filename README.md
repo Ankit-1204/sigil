@@ -6,4 +6,4 @@ A modular, AI chatbot engine with a plug-and-play React UI. Supports multiple ba
 ## Installation
 
 ```bash
-npm install sigil
+npm install @ankit-1204/sigil
