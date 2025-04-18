@@ -138,12 +138,41 @@ class ChatEngine {
             console.log(completeMessage)
             const response = await this.model.generate(completeMessage)
             const { processedResponse, actionResults } = await this._processReActResponse(response);
+            finalResponse += processedResponse + '\n\n';
+            if (actionResults.length === 0 || this._isResponseComplete(processedResponse)) {
+                break;
+            }
+            currentQuestion = "Continue from your previous observations and complete the task.";
+            this.memory.addMessage('assistant', processedResponse);
+            this.memory.addMessage('user', currentQuestion);
         }
         
-        console.log(response)
-        this.memory.addMessage('assistant',response)
-        return response
+        const cleanedResponse = this._cleanFinalResponse(finalResponse);
+        this.memory.addMessage('assistant', cleanedResponse);
+        
+        return cleanedResponse;
     }
+
+    _cleanFinalResponse(response) {
+        let cleaned = response;
+        cleaned = cleaned.replace(/<thinking>([\s\S]*?)<\/thinking>/g, '$1');
+        cleaned = cleaned.replace(/<action\s+name="([^"]+)"\s+parameters=({[^}]+})>\s*([\s\S]*?)\s*<\/action>/g, 
+          'I used $1 to $3');
+        cleaned = cleaned.replace(/<observation>([\s\S]*?)<\/observation>/g, 
+          'This gave me the following information:\n$1\n');
+        cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
+        
+        return cleaned;
+      }
+
+    _isResponseComplete(response) {
+        return (
+          response.includes("final answer") || 
+          response.includes("Final answer") ||
+          response.includes("to summarize") ||
+          response.includes("In conclusion")
+        );
+      }
 
     reset(){
         this.memory.clear()
